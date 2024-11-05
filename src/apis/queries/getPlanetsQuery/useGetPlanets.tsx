@@ -1,10 +1,10 @@
 import { useQuery } from "@apollo/client";
 
-import { GET_PLANETS_QUERY } from "../queries/getPlanetsQuery";
-import FilmModel from "../models/FilmModel";
-import PlanetStore from "../store/PlanetStore";
-import { GetPlanetsHookType, PlanetType } from "../types";
-import PlanetModel from "../models/PlanetModel";
+import { GET_PLANETS_QUERY } from "./getPlanetsQuery";
+import FilmModel from "../../../models/FilmModel";
+import PlanetStore from "../../../store/PlanetStore";
+import { GetPlanetsHookType, PlanetType } from "../../../types";
+import PlanetModel from "../../../models/PlanetModel";
 
 const useGetPlanets: GetPlanetsHookType = () => {
   const { loading, error, refetch } = useQuery(GET_PLANETS_QUERY, {

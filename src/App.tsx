@@ -1,7 +1,7 @@
 import React from "react";
 import { observer } from "mobx-react-lite";
 
-import useGetPlanets from "./hooks/useGetPlanets";
+import useGetPlanets from "./apis/queries/getPlanetsQuery/useGetPlanets";
 import Planets from "./components/Planets";
 
 const App: React.FC = observer(() => {

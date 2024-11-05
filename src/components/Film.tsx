@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { observer } from "mobx-react-lite";
 
 import { FilmPropsType } from "../types";
-import useGetFilm from "../hooks/useGetFilm";
+import useGetFilm from "../apis/queries/getFilmQuery/useGetFilm";
 import FilmModal from "./FilmModal";
 
 const Film: React.FC<FilmPropsType> = observer(({ film }) => {
@@ -36,7 +36,7 @@ const Film: React.FC<FilmPropsType> = observer(({ film }) => {
   return (
     <li
       onClick={handleFilmClick}
-      className="rounded-xl bg-slate-700 w-fit p-1 px-2"
+      className="rounded-xl cursor-pointer bg-slate-700 w-fit p-1 px-2"
     >
       <p className="text-sm">{title}</p>
       {renderFilmModal()}

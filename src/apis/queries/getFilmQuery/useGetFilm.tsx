@@ -1,9 +1,9 @@
 import { useLazyQuery } from "@apollo/client";
 
-import { GetFilmHookType, PlanetMovieType } from "../types";
-import planetStore from "../store/PlanetStore";
-import MovieModel from "../models/MovieModel";
-import { GET_FILM_QUERY } from "../queries/getFilmQuery";
+import { GetFilmHookType, PlanetMovieType } from "../../../types";
+import planetStore from "../../../store/PlanetStore";
+import MovieModel from "../../../models/MovieModel";
+import { GET_FILM_QUERY } from "./getFilmQuery";
 
 const useGetFilm: GetFilmHookType = () => {
   const [getFilm, { loading, error }] = useLazyQuery(GET_FILM_QUERY, {

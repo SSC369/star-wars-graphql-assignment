@@ -1,8 +1,8 @@
 import { useQuery } from "@apollo/client";
 
-import { EdgeType, GetFilmsHookType } from "../types";
-import movieStore from "../store/MovieStore";
-import { GET_FILMS } from "../queries/getFilmsQuery";
+import { EdgeType, GetFilmsHookType } from "../../../types";
+import movieStore from "../../../store/MovieStore";
+import { GET_FILMS } from "./getFilmsQuery";
 
 const useGetFilms: GetFilmsHookType = () => {
   const { loading, error, refetch } = useQuery(GET_FILMS, {
