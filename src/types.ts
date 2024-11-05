@@ -1,8 +1,10 @@
 import {
   ApolloError,
   ApolloQueryResult,
+  LazyQueryExecFunction,
   OperationVariables,
 } from "@apollo/client";
+import FilmModel from "./models/FilmModel";
 
 export interface NodeType {
   director: string;
@@ -32,4 +34,64 @@ export type GetFilmsHookType = () => {
   ) => Promise<ApolloQueryResult<any>>;
   error: ApolloError | undefined;
   loading: boolean;
+};
+
+export interface FilmType {
+  id: string;
+  title: string;
+}
+
+export interface PlanetType {
+  name: string;
+  gravity: string;
+  filmConnection: {
+    films: FilmType[];
+  };
+}
+
+export interface AllPlanetsType {
+  planets: PlanetType[];
+}
+
+export interface FilmPropsType {
+  film: FilmModel;
+}
+
+export interface PlanetMovieType {
+  created: string;
+  director: string;
+  edited: string;
+  id: string;
+  openingCrawl: string;
+  title: string;
+}
+
+export interface PlanetMovieType {
+  director: string;
+  openingCrawl: string;
+  releaseDate: string;
+  title: string;
+  id: string;
+  edited: string;
+  __typename: string;
+}
+
+export interface FilmModalProps {
+  close: () => void;
+  loading: boolean;
+  error: ApolloError | undefined;
+}
+
+export type GetPlanetsHookType = () => {
+  loading: boolean;
+  error: ApolloError | undefined;
+  refetch: (
+    variables?: Partial<OperationVariables> | undefined
+  ) => Promise<ApolloQueryResult<any>>;
+};
+
+export type GetFilmHookType = () => {
+  getFilm: LazyQueryExecFunction<any, OperationVariables>;
+  loading: boolean;
+  error: ApolloError | undefined;
 };

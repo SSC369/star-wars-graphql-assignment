@@ -1,24 +1,8 @@
-import { DocumentNode, gql, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
+
 import { EdgeType, GetFilmsHookType } from "../types";
 import movieStore from "../store/MovieStore";
-
-const GET_FILMS: DocumentNode = gql`
-  query Root {
-    allFilms {
-      edges {
-        node {
-          director
-          openingCrawl
-          releaseDate
-          title
-          episodeID
-          id
-          edited
-        }
-      }
-    }
-  }
-`;
+import { GET_FILMS } from "../queries/getFilmsQuery";
 
 const useGetFilms: GetFilmsHookType = () => {
   const { loading, error, refetch } = useQuery(GET_FILMS, {
@@ -38,7 +22,6 @@ const useGetFilms: GetFilmsHookType = () => {
       });
     },
   });
-
   return { loading, error, refetch };
 };
 

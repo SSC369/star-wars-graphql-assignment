@@ -1,3 +1,5 @@
+import { makeAutoObservable } from "mobx";
+
 class MovieModel {
   director: string;
   id: string;
@@ -14,6 +16,7 @@ class MovieModel {
     title: string,
     edited: string
   ) {
+    makeAutoObservable(this, {}, { autoBind: true });
     this.director = director;
     this.id = id;
     this.openingCrawl = openingCrawl;
