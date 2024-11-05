@@ -23,7 +23,7 @@ const Planets: React.FC = observer(() => {
     );
   };
 
-  const renderPlanet = (planet: PlanetModel) => {
+  const renderPlanet = (planet: PlanetModel): React.ReactElement => {
     const { name, gravity, films } = planet;
     return (
       <li

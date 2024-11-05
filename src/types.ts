@@ -50,7 +50,9 @@ export interface PlanetType {
 }
 
 export interface AllPlanetsType {
-  planets: PlanetType[];
+  allPlanets: {
+    planets: PlanetType[];
+  };
 }
 
 export interface FilmPropsType {
@@ -95,3 +97,11 @@ export type GetFilmHookType = () => {
   loading: boolean;
   error: ApolloError | undefined;
 };
+
+export type GetFilmSuccessResponseType = (data: {
+  film: PlanetMovieType;
+}) => void;
+
+export type GetFilmsSuccessResponseType = (data: GetFilmsDataType) => void;
+
+export type GetPlanetsSuccessResponseType = (data: AllPlanetsType) => void;

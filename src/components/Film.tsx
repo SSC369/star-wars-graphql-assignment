@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { observer } from "mobx-react-lite";
 
 import { FilmPropsType } from "../types";
-import useGetFilm from "../apis/queries/getFilmQuery/useGetFilm";
+import useGetFilm from "../apis/queries/getFilmDetails/useGetFilm";
 import FilmModal from "./FilmModal";
 
 const Film: React.FC<FilmPropsType> = observer(({ film }) => {
