@@ -1,14 +1,35 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import launchStore from "../store/LaunchStore";
 import LaunchModel from "../models/LaunchModel";
 import { observer } from "mobx-react-lite";
 import useFetchLaunches from "../apis/queries/getLaunches/useFetchLaunches";
 import { formatLaunchesData } from "../factories/launchesFactory";
-import { v4 } from "uuid";
 
 const Launches: React.FC = observer(() => {
   const [offset, setOffset] = useState(0);
-  const { refetch, loading, error, fetchMore } = useFetchLaunches();
+  const { refetch, loading, error, fetchMore, fetchMoreLoading } =
+    useFetchLaunches();
+
+  //   const handleScroll = () => {
+  //     const scrollPosition =
+  //       window.innerHeight + document.documentElement.scrollTop;
+  //     const bottomPosition = document.documentElement.offsetHeight;
+  //     if (scrollPosition >= bottomPosition) {
+  //       fetchMore({
+  //         variables: {
+  //           offset: launchStore.launchesData.length + 10,
+  //         },
+  //       }).then(({ data }) => {
+  //         const formattedLaunchesData = formatLaunchesData(data);
+  //         launchStore.addLaunches(formattedLaunchesData);
+  //       });
+  //     }
+  //   };
+
+  //   useEffect(() => {
+  //     window.addEventListener("scroll", handleScroll);
+  //     return () => window.removeEventListener("scroll", handleScroll);
+  //   }, [loading]);
 
   const renderLoader = (): React.ReactElement => {
     return (
@@ -27,7 +48,7 @@ const Launches: React.FC = observer(() => {
     );
   };
 
-  if (loading) {
+  if (loading || fetchMoreLoading) {
     return renderLoader();
   }
 
@@ -43,7 +64,7 @@ const Launches: React.FC = observer(() => {
     return (
       <li
         className="md:w-[40%] lg:w-[30%] w-4/5 shadow-xl  text-slate-200 min-h-[200px] flex flex-col gap-2 bg-slate-800 p-2 px-4 rounded-xl"
-        key={v4()}
+        key={id}
       >
         <div className="flex justify-between items-center gap-2">
           <p className="text-slate-400">Mission Name:</p>
@@ -126,6 +147,12 @@ const Launches: React.FC = observer(() => {
           return renderLaunch(launch);
         })}
       </ul>
+
+      {/* {fetchMoreLoading && (
+        <p className="font-medium text-xl text-center my-4 text-slate-200">
+          Fetching more ....
+        </p>
+      )} */}
     </div>
   );
 });

@@ -101,6 +101,7 @@ export type GetFilmHookType = () => {
 
 export type FetchLaunchesHookType = () => {
   loading: boolean;
+  fetchMoreLoading: boolean;
   error: ApolloError | undefined;
   refetch: (
     variables?: Partial<OperationVariables> | undefined

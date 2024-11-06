@@ -14,8 +14,7 @@ const cache = new InMemoryCache({
     Query: {
       fields: {
         launches: {
-          ...offsetLimitPagination(),
-          keyArgs: ["offset"],
+          ...offsetLimitPagination([]),
         },
       },
     },

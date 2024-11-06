@@ -12,12 +12,14 @@ const useFetchLaunches: FetchLaunchesHookType = () => {
     notifyOnNetworkStatusChange: true,
     fetchPolicy: "cache-and-network",
     onCompleted: (data) => {
-      console.log(data);
       onSuccess(data);
     },
   });
   const loading = networkStatus === NetworkStatus.loading;
-  return { loading, error, refetch, fetchMore };
+
+  const fetchMoreLoading = networkStatus === NetworkStatus.fetchMore;
+
+  return { loading, error, refetch, fetchMore, fetchMoreLoading };
 };
 
 export default useFetchLaunches;
