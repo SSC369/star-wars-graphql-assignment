@@ -11,6 +11,7 @@ const useFetchLaunches: FetchLaunchesHookType = () => {
     },
     notifyOnNetworkStatusChange: true,
     fetchPolicy: "cache-and-network",
+    nextFetchPolicy: "cache-only",
     onCompleted: (data) => {
       onSuccess(data);
     },

@@ -10,26 +10,26 @@ const Launches: React.FC = observer(() => {
   const { refetch, loading, error, fetchMore, fetchMoreLoading } =
     useFetchLaunches();
 
-  //   const handleScroll = () => {
-  //     const scrollPosition =
-  //       window.innerHeight + document.documentElement.scrollTop;
-  //     const bottomPosition = document.documentElement.offsetHeight;
-  //     if (scrollPosition >= bottomPosition) {
-  //       fetchMore({
-  //         variables: {
-  //           offset: launchStore.launchesData.length + 10,
-  //         },
-  //       }).then(({ data }) => {
-  //         const formattedLaunchesData = formatLaunchesData(data);
-  //         launchStore.addLaunches(formattedLaunchesData);
-  //       });
-  //     }
-  //   };
+  // const handleScroll = () => {
+  //   const scrollPosition =
+  //     window.innerHeight + document.documentElement.scrollTop;
+  //   const bottomPosition = document.documentElement.offsetHeight;
+  //   if (scrollPosition >= bottomPosition) {
+  //     fetchMore({
+  //       variables: {
+  //         offset: launchStore.launchesData.length + 10,
+  //       },
+  //     }).then(({ data }) => {
+  //       const formattedLaunchesData = formatLaunchesData(data);
+  //       launchStore.addLaunches(formattedLaunchesData);
+  //     });
+  //   }
+  // };
 
-  //   useEffect(() => {
-  //     window.addEventListener("scroll", handleScroll);
-  //     return () => window.removeEventListener("scroll", handleScroll);
-  //   }, [loading]);
+  // useEffect(() => {
+  //   window.addEventListener("scroll", handleScroll);
+  //   return () => window.removeEventListener("scroll", handleScroll);
+  // }, [loading]);
 
   const renderLoader = (): React.ReactElement => {
     return (
@@ -96,6 +96,9 @@ const Launches: React.FC = observer(() => {
 
   const handleNext = (): void => {
     setOffset((prevOffset) => prevOffset + 10);
+    if (offset + 10 < launchStore.launchesData.length) {
+      return;
+    }
     fetchMore({
       variables: {
         offset: offset + 10,
@@ -147,8 +150,8 @@ const Launches: React.FC = observer(() => {
           return renderLaunch(launch);
         })}
       </ul>
-
-      {/* {fetchMoreLoading && (
+      {/* 
+      {fetchMoreLoading && (
         <p className="font-medium text-xl text-center my-4 text-slate-200">
           Fetching more ....
         </p>
