@@ -4,11 +4,12 @@ import LaunchModel from "../models/LaunchModel";
 import { observer } from "mobx-react-lite";
 import useFetchLaunches from "../apis/queries/getLaunches/useFetchLaunches";
 import { formatLaunchesData } from "../factories/launchesFactory";
+import { v4 } from "uuid";
 
 const Launches: React.FC = observer(() => {
   const [offset, setOffset] = useState(0);
   const { refetch, loading, error, fetchMore } = useFetchLaunches();
-  console.log(loading);
+
   const renderLoader = (): React.ReactElement => {
     return (
       <div className="bg-slate-900 min-h-dvh text-white flex items-center justify-center">
@@ -42,7 +43,7 @@ const Launches: React.FC = observer(() => {
     return (
       <li
         className="md:w-[40%] lg:w-[30%] w-4/5 shadow-xl  text-slate-200 min-h-[200px] flex flex-col gap-2 bg-slate-800 p-2 px-4 rounded-xl"
-        key={id}
+        key={v4()}
       >
         <div className="flex justify-between items-center gap-2">
           <p className="text-slate-400">Mission Name:</p>
@@ -78,11 +79,9 @@ const Launches: React.FC = observer(() => {
       variables: {
         offset: offset + 10,
       },
-    }).then(({ data, loading }) => {
-      if (!loading) {
-        const formattedLaunchesData = formatLaunchesData(data);
-        launchStore.updateLaunches(formattedLaunchesData);
-      }
+    }).then(({ data }) => {
+      const formattedLaunchesData = formatLaunchesData(data);
+      launchStore.addLaunches(formattedLaunchesData);
     });
   };
 
@@ -104,7 +103,6 @@ const Launches: React.FC = observer(() => {
         >
           Prev
         </button>
-
         <button
           className="bg-slate-600  mb-4 rounded-xl p-2 px-4 text-slate-200 font-medium"
           onClick={handleNext}
@@ -124,7 +122,7 @@ const Launches: React.FC = observer(() => {
       {renderButtons()}
 
       <ul className="flex flex-wrap gap-4 items-start justify-center">
-        {launchStore.launchesData.slice(offset).map((launch) => {
+        {launchStore.launchesData.slice(offset, offset + 10).map((launch) => {
           return renderLaunch(launch);
         })}
       </ul>

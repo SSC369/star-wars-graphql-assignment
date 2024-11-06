@@ -4,6 +4,7 @@ import LaunchModel from "../models/LaunchModel";
 
 class LaunchStore {
   launches: LaunchModel[] = [];
+
   constructor() {
     makeAutoObservable(this, {}, { autoBind: true });
   }
@@ -20,22 +21,15 @@ class LaunchStore {
     return this.launches;
   }
 
-  updateLaunches(launches: LaunchType[]) {
-    launches.forEach((launch) => {
-      const { id, launchYear, missionName, rocket } = launch;
-      let present = false;
-      this.launches.forEach((storedLaunch) => {
-        if (storedLaunch.id === launch.id) {
-          present = true;
-          return;
-        }
-      });
-      if (!present) {
-        this.launches.push(
+  addLaunches(launches: LaunchType[]) {
+    const existingIds = new Set(this.launches.map((launch) => launch.id));
+    const newLaunches = launches
+      .filter(({ id }) => !existingIds.has(id))
+      .map(
+        ({ id, launchYear, missionName, rocket }) =>
           new LaunchModel(id, launchYear, missionName, rocket)
-        );
-      }
-    });
+      );
+    this.launches = [...this.launches, ...newLaunches];
   }
 }
 const launchStore = new LaunchStore();

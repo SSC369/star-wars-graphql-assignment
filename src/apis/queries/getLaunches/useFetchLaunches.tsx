@@ -9,8 +9,10 @@ const useFetchLaunches: FetchLaunchesHookType = () => {
       limit: 10,
       offset: 0,
     },
+    notifyOnNetworkStatusChange: true,
     fetchPolicy: "cache-and-network",
     onCompleted: (data) => {
+      console.log(data);
       onSuccess(data);
     },
   });
