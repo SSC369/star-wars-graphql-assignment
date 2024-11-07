@@ -5,6 +5,7 @@ import {
   InMemoryCache,
   HttpLink,
 } from "@apollo/client";
+import { persistCache } from "apollo3-cache-persist";
 import { offsetLimitPagination } from "@apollo/client/utilities";
 
 import "./index.css";
@@ -20,6 +21,11 @@ const cache = new InMemoryCache({
       },
     },
   },
+});
+
+persistCache({
+  cache,
+  storage: window.localStorage,
 });
 
 const client = new ApolloClient({
