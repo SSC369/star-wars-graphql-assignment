@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
+import { observer } from "mobx-react-lite";
+
 import launchStore from "../store/LaunchStore";
 import LaunchModel from "../models/LaunchModel";
-import { observer } from "mobx-react-lite";
 import useFetchLaunches from "../apis/queries/getLaunches/useFetchLaunches";
 import { formatLaunchesData } from "../factories/launchesFactory";
+import { LAUNCHES_LIMIT } from "../contants";
 
 const Launches: React.FC = observer(() => {
-  const [offset, setOffset] = useState(0);
+  const [offset, setOffset] = useState<number>(0);
   const { refetch, loading, error, fetchMore, fetchMoreLoading } =
     useFetchLaunches();
 
@@ -17,7 +19,7 @@ const Launches: React.FC = observer(() => {
   //   if (scrollPosition >= bottomPosition) {
   //     fetchMore({
   //       variables: {
-  //         offset: launchStore.launchesData.length + 10,
+  //         offset: launchStore.launchesData.length + LAUNCHES_LIMIT,
   //       },
   //     }).then(({ data }) => {
   //       const formattedLaunchesData = formatLaunchesData(data);
@@ -51,7 +53,6 @@ const Launches: React.FC = observer(() => {
   if (loading || fetchMoreLoading) {
     return renderLoader();
   }
-
   if (error) {
     return renderErrorView();
   }
@@ -95,13 +96,13 @@ const Launches: React.FC = observer(() => {
   };
 
   const handleNext = (): void => {
-    setOffset((prevOffset) => prevOffset + 10);
-    if (offset + 10 < launchStore.launchesData.length) {
+    setOffset((prevOffset) => prevOffset + LAUNCHES_LIMIT);
+    if (offset + LAUNCHES_LIMIT < launchStore.launchesData.length) {
       return;
     }
     fetchMore({
       variables: {
-        offset: offset + 10,
+        offset: offset + LAUNCHES_LIMIT,
       },
     }).then(({ data }) => {
       const formattedLaunchesData = formatLaunchesData(data);
@@ -113,12 +114,12 @@ const Launches: React.FC = observer(() => {
     if (offset === 0) {
       return;
     }
-    setOffset((prevOffset) => prevOffset - 10);
+    setOffset((prevOffset) => prevOffset - LAUNCHES_LIMIT);
   };
 
-  const renderButtons = () => {
+  const renderButtons = (): React.ReactElement => {
     return (
-      <div className="flex gap-2 self-center">
+      <div className="flex justify-between w-full self-center">
         <button
           className={`bg-slate-600  mb-4 rounded-xl p-2 px-4 text-slate-200 font-medium ${
             offset === 0 && "opacity-50 pointer-events-none"
@@ -138,7 +139,7 @@ const Launches: React.FC = observer(() => {
   };
 
   return (
-    <div className="flex flex-col ">
+    <div className="flex flex-col p-4">
       <h1 className="text-3xl font-semibold text-slate-100 mb-4 text-center">
         SpaceX Launches
       </h1>
@@ -146,9 +147,11 @@ const Launches: React.FC = observer(() => {
       {renderButtons()}
 
       <ul className="flex flex-wrap gap-4 items-start justify-center">
-        {launchStore.launchesData.slice(offset, offset + 10).map((launch) => {
-          return renderLaunch(launch);
-        })}
+        {launchStore.launchesData
+          .slice(offset, offset + LAUNCHES_LIMIT)
+          .map((launch) => {
+            return renderLaunch(launch);
+          })}
       </ul>
       {/* 
       {fetchMoreLoading && (

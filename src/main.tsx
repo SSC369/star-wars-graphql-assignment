@@ -6,6 +6,7 @@ import {
   HttpLink,
 } from "@apollo/client";
 import { offsetLimitPagination } from "@apollo/client/utilities";
+
 import "./index.css";
 import App from "./App.tsx";
 

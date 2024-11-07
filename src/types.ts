@@ -160,3 +160,7 @@ export interface LaunchType {
   missionName: string;
   rocket: RocketType;
 }
+
+export type FormatLaunchesFunctionType = (data: {
+  launches: LaunchResponseDataType[];
+}) => LaunchType[];

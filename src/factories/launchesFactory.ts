@@ -1,8 +1,6 @@
-import { LaunchResponseDataType } from "../types";
+import { FormatLaunchesFunctionType } from "../types";
 
-export const formatLaunchesData = (data: {
-  launches: LaunchResponseDataType[];
-}) => {
+export const formatLaunchesData: FormatLaunchesFunctionType = (data) => {
   const { launches } = data;
   const formattedLaunchesData = launches.map((launch) => {
     const { id, launch_year, mission_name, rocket } = launch;

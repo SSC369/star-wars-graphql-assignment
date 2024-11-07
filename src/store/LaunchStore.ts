@@ -1,4 +1,5 @@
 import { makeAutoObservable } from "mobx";
+
 import { LaunchType, RocketType } from "../types";
 import LaunchModel from "../models/LaunchModel";
 
@@ -13,7 +14,7 @@ class LaunchStore {
     launchYear: string,
     missionName: string,
     rocket: RocketType
-  ) {
+  ): void {
     this.launches.push(new LaunchModel(id, launchYear, missionName, rocket));
   }
 
@@ -21,7 +22,7 @@ class LaunchStore {
     return this.launches;
   }
 
-  addLaunches(launches: LaunchType[]) {
+  addLaunches(launches: LaunchType[]): void {
     const existingIds = new Set(this.launches.map((launch) => launch.id));
     const newLaunches = launches
       .filter(({ id }) => !existingIds.has(id))
@@ -32,5 +33,6 @@ class LaunchStore {
     this.launches = [...this.launches, ...newLaunches];
   }
 }
+
 const launchStore = new LaunchStore();
 export default launchStore;
